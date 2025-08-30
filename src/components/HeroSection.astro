@@ -1,0 +1,90 @@
+---
+// Hero Section with full-screen video background
+---
+
+<section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
+  <!-- Video Background -->
+  <div class="absolute inset-0 w-full h-full">
+    <video 
+      class="w-full h-full object-cover"
+      autoplay 
+      muted 
+      loop 
+      playsinline
+      poster="/candle-poster.jpg"
+    >
+      <source src="/candle.mp4" type="video/mp4">
+      <!-- Fallback for browsers that don't support video -->
+      <div class="w-full h-full bg-gradient-to-br from-amber-100 via-orange-100 to-amber-200"></div>
+    </video>
+    
+    <!-- Video overlay for better text readability -->
+    <div class="absolute inset-0 bg-black/30"></div>
+  </div>
+  
+  <!-- Hero Content -->
+  <div class="relative z-10 text-center text-white px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+      Illuminate Your Space with
+      <span class="text-amber-300">Solite Candles</span>
+    </h1>
+    
+    <p class="text-xl sm:text-2xl mb-8 text-gray-100 max-w-2xl mx-auto">
+      Handcrafted luxury candles that bring warmth, fragrance, and elegance to your home. 
+      Each candle is carefully made with premium materials and exquisite scents.
+    </p>
+    
+    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+      <a 
+        href="#products" 
+        class="bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl"
+      >
+        Shop Now
+      </a>
+      <a 
+        href="#about" 
+        class="border-2 border-white text-white hover:bg-white hover:text-gray-900 px-8 py-4 rounded-lg text-lg font-semibold transition-colors duration-300"
+      >
+        Learn More
+      </a>
+    </div>
+    
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+      <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+      </svg>
+    </div>
+  </div>
+  
+  <!-- Floating candle elements for visual appeal -->
+  <div class="absolute top-20 left-10 opacity-20 animate-float-slow">
+    <div class="w-16 h-16 bg-amber-400 rounded-full blur-sm"></div>
+  </div>
+  <div class="absolute top-40 right-20 opacity-30 animate-float">
+    <div class="w-12 h-12 bg-orange-300 rounded-full blur-sm"></div>
+  </div>
+  <div class="absolute bottom-40 left-20 opacity-25 animate-float-slow">
+    <div class="w-20 h-20 bg-yellow-300 rounded-full blur-sm"></div>
+  </div>
+</section>
+
+<style>
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+  
+  @keyframes float-slow {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-float-slow {
+    animation: float-slow 8s ease-in-out infinite;
+  }
+</style>
