@@ -4,6 +4,11 @@ export default {
   theme: {
     extend: {
       colors: {
+        'custom': {
+          'silver': '#C0C0C0',
+          'black': '#000000',
+          'white': '#FFFFFF',
+        },
         'candle': {
           50: '#fefce8',
           100: '#fef9c3',
@@ -16,6 +21,9 @@ export default {
           800: '#854d0e',
           900: '#713f12',
         }
+      },
+      fontFamily: {
+        'bebas': ['Bebas Neue', 'cursive'],
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',
