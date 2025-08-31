@@ -1,0 +1,136 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { products, categories } from '../data/products.ts';
+---
+
+<Layout title="Our Products - Solite Candles">
+  <main class="min-h-screen bg-custom-black pt-24">
+    <!-- Hero Section -->
+    <section class="py-20 text-center">
+      <div class="container mx-auto px-4">
+        <h1 class="text-5xl md:text-6xl font-bebas text-custom-white mb-6">
+          Our Premium Collection
+        </h1>
+        <p class="text-xl text-custom-silver/80 max-w-3xl mx-auto">
+          Discover our handcrafted luxury candles, each carefully made with premium materials and exquisite fragrances.
+        </p>
+      </div>
+    </section>
+
+    <!-- Products Grid -->
+    <section class="py-16">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {products.map((product) => (
+            <div class="bg-custom-black border border-custom-silver/20 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group">
+              <!-- Product Image -->
+              <div class="relative overflow-hidden">
+                <img 
+                  src={product.image} 
+                  alt={product.name}
+                  class="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-110"
+                />
+                <div class="absolute inset-0 bg-custom-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                
+                <!-- Category Badge -->
+                <div class="absolute top-4 left-4">
+                  <span class="bg-custom-silver text-custom-black px-3 py-1 text-sm font-bebas">
+                    {product.category}
+                  </span>
+                </div>
+
+                <!-- Hover Overlay -->
+                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <a 
+                    href={`https://www.ebay.com.au/itm/${product.id === "1" ? "376465300458" : product.id === "2" ? "376471269753" : product.id === "3" ? "376471275009" : "376456100959"}?itmmeta=01K3ZW82KXVBYS63MYZX4YF4CD&hash=item57a7149bea:g:4Y4AAeSw-zFoe4ru`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="bg-custom-silver text-custom-black px-8 py-4 font-bebas text-lg hover:bg-custom-silver/80 transition-colors transform hover:scale-105"
+                  >
+                    View on eBay
+                  </a>
+                </div>
+              </div>
+              
+              <!-- Product Info -->
+              <div class="p-8">
+                <h3 class="text-2xl font-bebas text-custom-white mb-4">{product.name}</h3>
+                <p class="text-custom-silver/80 mb-6 leading-relaxed">{product.description}</p>
+                
+                <div class="space-y-4 mb-6">
+                  <div class="flex items-center justify-between">
+                    <span class="text-3xl font-bebas text-custom-silver">{product.price}</span>
+                    <span class="text-sm text-custom-silver/60 bg-custom-silver/10 px-3 py-1">Burns {product.burnTime}</span>
+                  </div>
+                  
+                  <div class="flex items-center">
+                    <div class="flex text-custom-silver mr-3">
+                      {[...Array(5)].map((_, i) => (
+                        <svg key={i} class={`w-5 h-5 ${i < Math.floor(product.rating) ? 'text-custom-silver' : 'text-custom-silver/30'}`} fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-sm text-custom-silver/60">({product.reviews} reviews)</span>
+                  </div>
+                </div>
+                
+                <!-- Tags -->
+                <div class="mb-6">
+                  <div class="flex flex-wrap gap-2">
+                    {product.tags.slice(0, 4).map((tag) => (
+                      <span class="bg-custom-silver/20 text-custom-silver px-3 py-1 text-sm border border-custom-silver/30">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="space-y-3">
+                  <a 
+                    href={`https://www.ebay.com.au/itm/${product.id === "1" ? "376465300458" : product.id === "2" ? "376471269753" : product.id === "3" ? "376471275009" : "376456100959"}?itmmeta=01K3ZW82KXVBYS63MYZX4YF4CD&hash=item57a7149bea:g:4Y4AAeSw-zFoe4ru`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="w-full bg-custom-silver hover:bg-custom-silver/80 text-custom-black py-4 px-6 font-bebas text-lg transition-colors duration-300 text-center block transform hover:scale-105"
+                  >
+                    Buy on eBay
+                  </a>
+                  
+                  <a 
+                    href={`https://www.ebay.com.au/itm/${product.id === "1" ? "376465300458" : product.id === "2" ? "376471269753" : product.id === "3" ? "376471275009" : "376456100959"}?itmmeta=01K3ZW82KXVBYS63MYZX4YF4CD&hash=item57a7149bea:g:4Y4AAeSw-zFoe4ru`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="w-full border-2 border-custom-silver text-custom-silver hover:bg-custom-silver hover:text-custom-black py-3 px-6 font-bebas transition-colors duration-300 text-center block"
+                  >
+                    View Details
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <!-- Call to Action -->
+        <div class="text-center mt-20">
+          <div class="bg-custom-black border border-custom-silver/20 p-12 max-w-4xl mx-auto">
+            <h3 class="text-3xl font-bebas text-custom-white mb-4">
+              Can't Find What You're Looking For?
+            </h3>
+            <p class="text-custom-silver/80 mb-8">
+              Visit our eBay store to see our complete collection and discover more handcrafted luxury candles.
+            </p>
+            <a 
+              href="https://www.ebay.com.au/sch/i.html?sid=solite&_pgn=1&isRefine=true&_trksid=p4429486.m2548.l2567" 
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-block bg-custom-silver hover:bg-custom-silver/80 text-custom-black px-10 py-4 text-xl font-bebas transition-colors duration-300 transform hover:scale-105"
+            >
+              Visit Our eBay Store
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
