@@ -19,9 +19,9 @@ import { products } from '../data/products';
     <!-- Product Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {products.map((product) => (
-        <div class="bg-custom-black border border-custom-silver/20 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group">
+        <div class="bg-custom-black border border-custom-silver/20 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group">
           <!-- Product Image -->
-          <div class="relative overflow-hidden rounded-t-2xl">
+          <div class="relative overflow-hidden">
             <div class="aspect-square bg-gradient-to-br from-custom-silver/10 to-custom-silver/5 flex items-center justify-center">
               <div class="text-6xl text-custom-silver opacity-60">🕯️</div>
             </div>
@@ -29,14 +29,14 @@ import { products } from '../data/products';
             
             <!-- Category Badge -->
             <div class="absolute top-4 left-4">
-              <span class="bg-custom-silver text-custom-black px-3 py-1 rounded-full text-sm font-bebas">
+              <span class="bg-custom-silver text-custom-black px-3 py-1 text-sm font-bebas">
                 {product.category}
               </span>
             </div>
             
             <!-- Quick View Button -->
             <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <button class="bg-custom-silver text-custom-black px-6 py-3 rounded-lg font-bebas hover:bg-custom-silver/80 transition-colors">
+              <button class="bg-custom-silver text-custom-black px-6 py-3 font-bebas hover:bg-custom-silver/80 transition-colors">
                 Quick View
               </button>
             </div>
@@ -52,7 +52,7 @@ import { products } from '../data/products';
               <span class="text-sm text-custom-silver/60">Burns {product.burnTime}</span>
             </div>
             
-            <button class="w-full bg-custom-silver hover:bg-custom-silver/80 text-custom-black py-3 px-4 rounded-lg font-bebas transition-colors duration-300">
+            <button class="w-full bg-custom-silver hover:bg-custom-silver/80 text-custom-black py-3 px-4 font-bebas transition-colors duration-300">
               Add to Cart
             </button>
           </div>
@@ -62,7 +62,7 @@ import { products } from '../data/products';
     
     <!-- View All Button -->
     <div class="text-center mt-12">
-      <a href="/products" class="inline-block bg-custom-silver hover:bg-custom-silver/80 text-custom-black px-8 py-4 rounded-lg text-lg font-bebas transition-colors duration-300">
+      <a href="/products" class="inline-block bg-custom-silver hover:bg-custom-silver/80 text-custom-black px-8 py-4 text-lg font-bebas transition-colors duration-300">
         View All Products
       </a>
     </div>

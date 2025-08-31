@@ -36,25 +36,29 @@ const { title, description = "Discover our handcrafted luxury candles made with 
     <nav class="fixed top-0 w-full bg-custom-black/95 backdrop-blur-md z-50 border-b border-custom-silver/20">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
-          <div class="flex items-center">
-            <a href="/" class="flex items-center space-x-2">
-              <img src="/logo.png" alt="Solite Candles Logo" class="h-10 w-10 rounded-full object-cover" />
-              <span class="text-2xl font-bebas text-custom-silver">Solite</span>
-            </a>
-          </div>
+                     <div class="flex items-center">
+             <a href="/" class="flex items-center">
+               <img 
+                 id="logo" 
+                 src="/logo.png" 
+                 alt="Solite Candles Logo" 
+                 class="h-12 w-12 object-cover transition-all duration-300 ease-out" 
+               />
+             </a>
+           </div>
           
           <div class="hidden md:block">
             <div class="ml-10 flex items-baseline space-x-4">
-              <a href="/" class="text-custom-silver hover:text-custom-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <a href="/" class="text-custom-silver hover:text-custom-white px-3 py-2 text-sm font-medium transition-colors">
                 Home
               </a>
-              <a href="/products" class="text-custom-silver hover:text-custom-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <a href="/products" class="text-custom-silver hover:text-custom-white px-3 py-2 text-sm font-medium transition-colors">
                 Products
               </a>
-              <a href="/about" class="text-custom-silver hover:text-custom-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <a href="/about" class="text-custom-silver hover:text-custom-white px-3 py-2 text-sm font-medium transition-colors">
                 About
               </a>
-              <a href="/#contact" class="text-custom-silver hover:text-custom-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <a href="/#contact" class="text-custom-silver hover:text-custom-white px-3 py-2 text-sm font-medium transition-colors">
                 Contact
               </a>
             </div>
@@ -80,7 +84,7 @@ const { title, description = "Discover our handcrafted luxury candles made with 
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div class="col-span-1 md:col-span-2">
             <div class="flex items-center space-x-3 mb-4">
-              <img src="/logo.png" alt="Solite Candles Logo" class="h-12 w-12 rounded-full object-cover" />
+              <img src="/logo.png" alt="Solite Candles Logo" class="h-12 w-12 object-cover" />
               <h3 class="text-2xl font-bebas text-custom-silver">Solite Candles</h3>
             </div>
             <p class="text-custom-silver/80 mb-4">
@@ -128,8 +132,36 @@ const { title, description = "Discover our handcrafted luxury candles made with 
         
         <div class="border-t border-custom-silver/20 mt-8 pt-8 text-center text-custom-silver/60">
           <p>&copy; 2024 Solite Candles. All rights reserved.</p>
-        </div>
-      </div>
-    </footer>
-  </body>
-</html>
+                 </div>
+       </div>
+     </footer>
+     
+     <script>
+       // Logo scroll animation
+       document.addEventListener('DOMContentLoaded', function() {
+         const logo = document.getElementById('logo');
+         if (!logo) return;
+         
+         let lastScrollTop = 0;
+         
+         window.addEventListener('scroll', function() {
+           const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+           
+           if (scrollTop > lastScrollTop && scrollTop > 50) {
+             // Scrolling down - make logo smaller
+             logo.style.transform = 'scale(0.75)';
+             logo.style.height = '36px';
+             logo.style.width = '36px';
+           } else if (scrollTop <= 50) {
+             // At the top - restore original size
+             logo.style.transform = 'scale(1)';
+             logo.style.height = '48px';
+             logo.style.width = '48px';
+           }
+           
+           lastScrollTop = scrollTop;
+         });
+       });
+     </script>
+   </body>
+ </html>
