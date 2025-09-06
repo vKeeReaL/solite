@@ -117,26 +117,91 @@ your-repo/
 
 ## 🐛 Troubleshooting
 
-### 5.1 Deployment Fails
-**Check these common issues:**
-1. **FTP credentials** are correct
-2. **Server directory** exists and is writable
-3. **File permissions** allow uploads
-4. **Build process** completes successfully
+### 5.1 Connection Errors (ENOTFOUND, Connection Failed)
 
-### 5.2 Files Not Uploading
-**Verify:**
-1. **Local directory paths** are correct
-2. **Server directory** permissions
-3. **FTP connection** is stable
-4. **File exclusions** aren't too restrictive
+**Error: `ENOTFOUND` or "server doesn't seem to exist"**
+- ✅ **Check server address format**:
+  - Use: `ftp.yourdomain.com` or `yourdomain.com`
+  - Avoid: `http://ftp.yourdomain.com` or `ftp://ftp.yourdomain.com`
+- ✅ **Try different protocols**:
+  - If FTP fails, try SFTP (use `deploy-sftp.yml` workflow)
+  - Some hosts only support SFTP, not FTP
+- ✅ **Check if port is needed**:
+  - FTP: port 21 (default)
+  - SFTP: port 22 (default)
+  - Some hosts use custom ports like 21, 990, 2121
 
-### 5.3 Build Errors
-**Common solutions:**
-1. **Node.js version** compatibility
-2. **Dependencies** are properly installed
-3. **Build script** works locally
-4. **Repository** has all required files
+**Error: "Failed to connect, server only supports SFTP"**
+- ✅ **Switch to SFTP workflow**:
+  1. Rename `deploy-ftp.yml` to `deploy-ftp-backup.yml`
+  2. Rename `deploy-sftp.yml` to `deploy-ftp.yml`
+  3. Update your secrets if needed
+
+### 5.2 Authentication Errors
+
+**Error: "Login failed" or "Authentication failed"**
+- ✅ **Verify credentials**:
+  - Username: Usually your hosting account username
+  - Password: Your hosting account password
+  - Server: Your domain or hosting provider's FTP server
+- ✅ **Check special characters**:
+  - Escape special characters in passwords
+  - Use URL encoding if needed
+
+### 5.3 Server Configuration Issues
+
+**Error: "Permission denied" or "Directory not found"**
+- ✅ **Check server directory**:
+  - Use `./` for root directory
+  - Use `/public_html/` for cPanel hosting
+  - Use `/www/` for some hosting providers
+- ✅ **Verify file permissions**:
+  - Ensure directory is writable
+  - Check if hosting allows file uploads
+
+### 5.4 Common Hosting Provider Settings
+
+| Provider | Server Format | Directory | Port | Protocol |
+|----------|---------------|-----------|------|----------|
+| **cPanel** | `ftp.yourdomain.com` | `./public_html/` | 21 | FTP |
+| **GoDaddy** | `ftp.yourdomain.com` | `./` | 21 | FTP |
+| **Bluehost** | `ftp.yourdomain.com` | `./public_html/` | 21 | FTP |
+| **Hostinger** | `ftp.yourdomain.com` | `./public_html/` | 21 | FTP |
+| **SiteGround** | `ftp.yourdomain.com` | `./public_html/` | 21 | FTP |
+| **DigitalOcean** | `your-ip-address` | `./` | 22 | SFTP |
+
+### 5.5 Testing Your FTP Connection
+
+**Before setting up GitHub Actions, test manually:**
+
+1. **Using FileZilla (Free FTP Client)**:
+   - Download FileZilla
+   - Enter your server, username, password
+   - Test connection
+   - Note the exact server address and directory
+
+2. **Using Command Line**:
+   ```bash
+   # Test FTP connection
+   ftp your-server.com
+   
+   # Test SFTP connection
+   sftp username@your-server.com
+   ```
+
+3. **Check with your hosting provider**:
+   - Look for FTP settings in your hosting control panel
+   - Check if FTP is enabled
+   - Verify the correct server address and port
+
+### 5.6 Alternative Deployment Methods
+
+If FTP/SFTP continues to fail, consider:
+
+1. **Git-based deployment** (if your host supports it)
+2. **Webhook deployment** (if available)
+3. **Manual deployment** using hosting control panel
+4. **Different hosting provider** with better FTP support
 
 ## 📱 Advanced Configuration
 
