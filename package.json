@@ -7,7 +7,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test-ftp": "node test-ftp.js"
+    "test-ftp": "node test-ftp.js",
+    "create-favicon": "node create-favicon.js",
+    "cleanup": "rm -f create-favicon.js test-ftp.js"
   },
   "dependencies": {
     "@astrojs/react": "^4.3.0",
