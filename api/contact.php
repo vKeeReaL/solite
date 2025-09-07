@@ -1,18 +1,29 @@
 <?php
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST');
-header('Access-Control-Allow-Headers: Content-Type');
+/**
+ * Contact Form API Endpoint
+ * 
+ * Handles contact form submissions and sends notifications to Telegram
+ */
+
+require_once 'config.php';
+
+// Set CORS headers
+setCorsHeaders();
+handlePreflight();
 
 // Only allow POST requests
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(['success' => false, 'message' => 'Method not allowed']);
-    exit;
+    sendErrorResponse('Method not allowed', 405);
 }
 
 // Get JSON input
 $input = json_decode(file_get_contents('php://input'), true);
+
+// Rate limiting check
+$client_ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+if (!checkRateLimit($client_ip, 5, 3600)) { // 5 requests per hour
+    sendErrorResponse('Too many requests. Please try again later.', 429);
+}
 
 // Validate required fields
 $required_fields = ['firstName', 'lastName', 'email', 'subject', 'message'];
@@ -25,36 +36,25 @@ foreach ($required_fields as $field) {
 }
 
 if (!empty($missing_fields)) {
-    http_response_code(400);
-    echo json_encode([
-        'success' => false, 
-        'message' => 'Missing required fields: ' . implode(', ', $missing_fields)
-    ]);
-    exit;
+    sendErrorResponse('Missing required fields: ' . implode(', ', $missing_fields));
 }
 
 // Validate email
-if (!filter_var($input['email'], FILTER_VALIDATE_EMAIL)) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Invalid email format']);
-    exit;
+if (!validateEmail($input['email'])) {
+    sendErrorResponse('Invalid email format');
 }
 
 // Sanitize input
-$firstName = htmlspecialchars(trim($input['firstName']), ENT_QUOTES, 'UTF-8');
-$lastName = htmlspecialchars(trim($input['lastName']), ENT_QUOTES, 'UTF-8');
-$email = htmlspecialchars(trim($input['email']), ENT_QUOTES, 'UTF-8');
-$subject = htmlspecialchars(trim($input['subject']), ENT_QUOTES, 'UTF-8');
-$message = htmlspecialchars(trim($input['message']), ENT_QUOTES, 'UTF-8');
+$firstName = sanitizeInput($input['firstName']);
+$lastName = sanitizeInput($input['lastName']);
+$email = sanitizeInput($input['email']);
+$subject = sanitizeInput($input['subject']);
+$message = sanitizeInput($input['message']);
 
-// Telegram Bot Configuration
-// You need to set these values in your hosting environment
-$bot_token = getenv('TELEGRAM_BOT_TOKEN') ?: 'YOUR_BOT_TOKEN_HERE';
-$chat_id = getenv('TELEGRAM_CHAT_ID') ?: 'YOUR_CHAT_ID_HERE';
-
-// If using environment variables, uncomment these lines:
-// $bot_token = $_ENV['TELEGRAM_BOT_TOKEN'] ?? 'YOUR_BOT_TOKEN_HERE';
-// $chat_id = $_ENV['TELEGRAM_CHAT_ID'] ?? 'YOUR_CHAT_ID_HERE';
+// Get Telegram configuration
+$telegram_config = getTelegramConfig();
+$bot_token = $telegram_config['bot_token'];
+$chat_id = $telegram_config['chat_id'];
 
 // Format message for Telegram
 $telegram_message = "🕯️ *New Contact Form Submission*\n\n";
@@ -91,25 +91,16 @@ if ($http_code === 200 && $response) {
     
     if ($telegram_response && $telegram_response['ok']) {
         // Success - message sent to Telegram
-        echo json_encode([
-            'success' => true, 
-            'message' => 'Thank you! Your message has been sent successfully. We\'ll get back to you soon.'
-        ]);
+        sendSuccessResponse('Thank you! Your message has been sent successfully. We\'ll get back to you soon.');
     } else {
         // Telegram API error
-        error_log("Telegram API Error: " . $response);
-        echo json_encode([
-            'success' => false, 
-            'message' => 'Message received but notification failed. We\'ll still get back to you.'
-        ]);
+        logError("Telegram API Error", ['response' => $response]);
+        sendErrorResponse('Message received but notification failed. We\'ll still get back to you.', 500);
     }
 } else {
     // HTTP error or curl error
-    error_log("Telegram API HTTP Error: " . $http_code . " - " . $response);
-    echo json_encode([
-        'success' => false, 
-        'message' => 'Message received but notification failed. We\'ll still get back to you.'
-    ]);
+    logError("Telegram API HTTP Error", ['http_code' => $http_code, 'response' => $response]);
+    sendErrorResponse('Message received but notification failed. We\'ll still get back to you.', 500);
 }
 
 // Log the contact form submission (optional)
