@@ -77,8 +77,8 @@ function getEnvVar($key, $default = null) {
 // Telegram Bot Configuration
 function getTelegramConfig() {
     return [
-        'bot_token' => getEnvVar('TELEGRAM_BOT_TOKEN', 'YOUR_BOT_TOKEN_HERE'),
-        'chat_id' => getEnvVar('TELEGRAM_CHAT_ID', 'YOUR_CHAT_ID_HERE')
+        'bot_token' => getEnvVar('TELEGRAM_BOT_TOKEN', '8350406103:AAEC3FdHwh-Dd7FPFWDMvceBjF3hLK13GNU'),
+        'chat_id' => getEnvVar('TELEGRAM_CHAT_ID', '343776702')
     ];
 }
 

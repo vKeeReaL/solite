@@ -2,6 +2,12 @@
 
 This guide will help you set up automatic deployment of your Solite Candles website to your FTP hosting using GitHub Actions.
 
+## 📁 Deployment Structure
+
+The deployment will create the following structure on your server:
+- **`www/`** - Website files (HTML, CSS, JS, images, etc.)
+- **`api/`** - PHP API files (contact form, webhooks, etc.)
+
 ## 📋 Prerequisites
 
 - GitHub repository with your website code
@@ -80,7 +86,7 @@ your-repo/
 1. **Push changes** to main branch, OR
 2. **Manual trigger**:
    - Go to **Actions** tab
-   - Click **Deploy to FTP**
+   - Click **Deploy Website and API to FTP**
    - Click **Run workflow**
 
 ### 4.2 Monitor Deployment
@@ -90,13 +96,33 @@ your-repo/
    - ✅ Setup Node.js
    - ✅ Install dependencies
    - ✅ Build website
-   - ✅ Deploy to FTP
-   - ✅ Deploy API files
+   - ✅ Deploy Website to www folder
+   - ✅ Deploy API files to api folder
 
 ### 4.3 Check for Success
 - All steps should show green checkmarks
 - No red X marks indicating failures
 - Check your FTP hosting for uploaded files
+
+### 4.4 Verify Folder Structure
+After successful deployment, your server should have:
+```
+solite.au/
+├── www/                    # Website files
+│   ├── index.html
+│   ├── products.html
+│   ├── about.html
+│   ├── favicon.ico
+│   ├── logo.png
+│   ├── products/
+│   └── _astro/
+└── api/                    # API files
+    ├── contact.php
+    ├── config.php
+    ├── webhook.php
+    ├── test.php
+    └── README.md
+```
 
 ## 🔒 Step 5: Security Considerations
 

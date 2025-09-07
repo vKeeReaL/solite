@@ -1,4 +1,4 @@
-name: Deploy to FTP
+name: Deploy Website and API to FTP
 
 on:
   push:
@@ -25,13 +25,13 @@ jobs:
     - name: Build website
       run: npm run build
       
-    - name: Deploy to FTP
+    - name: Deploy Website to www folder
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: ./
+        server-dir: ./www/
         local-dir: ./dist/
         protocol: ftp
         port: 21
@@ -46,13 +46,13 @@ jobs:
           **/DEPLOYMENT_SETUP.md
           **/TELEGRAM_SETUP.md
           
-    - name: Deploy API files
+    - name: Deploy API files to api folder
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: ./
+        server-dir: ./api/
         local-dir: ./api/
         protocol: ftp
         port: 21
